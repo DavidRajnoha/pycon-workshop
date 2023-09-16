@@ -1,0 +1,22 @@
+default:
+  image: python:3.9-bullseye
+
+cache:
+  key: "${CI_JOB_NAME}"
+  paths:
+    - .cache/pip
+    - .venv
+
+ci:
+  only:
+    - merge_requests
+  stage: test
+  before_script:
+    # Install poetry
+    - pip install poetry
+    - poetry config virtualenvs.in-project true
+    # Initialize the repository
+    - make init
+  script:
+    # Run the CI tests
+    - make ci

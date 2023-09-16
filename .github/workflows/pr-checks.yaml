@@ -1,0 +1,21 @@
+name: PR Checks
+on: [pull_request]
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      # Set up Python
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      # Set up Poetry
+      - uses: Gr1N/setup-poetry@v8
+
+      # Init the project
+      - run: make init
+
+      # Run the CI checks
+      - run: make ci
